@@ -1,0 +1,51 @@
+{
+  "name": "gbfparty",
+  "version": "1.0.0",
+  "description": "GBF character ability search",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "parcel src/index.html",
+    "tsc": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrgood/gbfparty.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrgood/gbfparty/issues"
+  },
+  "homepage": "https://github.com/andrgood/gbfparty#readme",
+  "dependencies": {
+    "balloon-css": "^1.0.4",
+    "bootstrap": "^4.4.1",
+    "downshift": "^5.0.6",
+    "lodash": "^4.17.15",
+    "lodash-id": "^0.14.0",
+    "react": "^16.13.1",
+    "react-dnd": "^10.0.2",
+    "react-dnd-html5-backend": "^10.0.2",
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.149",
+    "@types/react": "^16.9.32",
+    "@types/react-dom": "^16.9.6",
+    "@typescript-eslint/eslint-plugin": "^2.26.0",
+    "@typescript-eslint/parser": "^2.26.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-jest": "^23.8.2",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^3.0.0",
+    "jest": "^25.2.7",
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-static-files-copy": "^2.3.1",
+    "sass": "^1.26.3",
+    "typescript": "^3.8.3"
+  }
+}

@@ -1,0 +1,10 @@
+@import "~bootstrap/scss/bootstrap";
+@import "~balloon-css/src/balloon";
+
+body {
+    margin-top: 2px;
+}
+
+.tooltip-big-text {
+    --balloon-font-size: 14px;
+}
