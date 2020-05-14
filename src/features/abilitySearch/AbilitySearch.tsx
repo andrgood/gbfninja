@@ -4,12 +4,13 @@ import {useCombobox} from 'downshift'
 import abilitySearchList, { AbilitySearchItemT } from './abilitySearchList'
 
 interface AbilitySearchProps {
+    abilityList?: AbilitySearchItemT[];
     onChange(selectedItem: AbilitySearchItemT): void;
 }
 
-function AbilitySearch({ onChange }: AbilitySearchProps): React.ReactElement {
+function AbilitySearch({ abilityList = abilitySearchList, onChange }: AbilitySearchProps): React.ReactElement {
 
-    const [inputItems, setInputItems] = useState(abilitySearchList)
+    const [inputItems, setInputItems] = useState(abilityList)
 
     const {
         getLabelProps,
