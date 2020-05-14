@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDrop } from 'react-dnd'
 
-import { AbilitySearchItem } from './AbilitySearch'
+import { AbilitySearchItem } from '../features/abilitySearch/AbilitySearch'
 import abilityMap from './ability/abilityMap'
 
 export type GroupType = 'must' | 'may'

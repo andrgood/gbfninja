@@ -1,22 +1,26 @@
 import React, {useState, useReducer, useEffect} from 'react'
+import { useDispatch } from 'react-redux'
 import _ from 'lodash'
 
 import mainReducer, { initialState } from '../reducers/searchItems'
 import { search, mustSearch } from '../search'
 
-import db from '../db'
-const abilitySearchList  = _.chain(db).get('abilitySearchList').value()
+import db from '../db/db'
 const count  = _.chain(db).get('characters').value().length
 const characters  = _.chain(db).get('characters').value()
 
-import AbilitySearch from '../components/AbilitySearch'
+import AbilitySearch from '../features/abilitySearch/AbilitySearch'
 import Group from '../components/Group'
 import Results from '../components/Results'
 
 import Backend from 'react-dnd-html5-backend'
 import { DndProvider } from 'react-dnd'
 
+import { addSearchTerm } from '../features/searchTerms/searchTermsSlice'
+
 function Search(): React.ReactElement {
+
+    const dispatch = useDispatch()
 
     const [genId, setGenId] = useState(1)
     const [mainState, mainStateDispatch] = useReducer(mainReducer, initialState)
@@ -52,53 +56,55 @@ function Search(): React.ReactElement {
 
 
     return (
-        <div className="container">
-            <div className="row">
-                <div className="col text-center">
-                    <h2>GranblueFantasy ability search</h2>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col">
-                    <AbilitySearch
-                        abilitySearchList = {abilitySearchList}
-                        onChange = { (selectedItem): void => { 
-                            mainStateDispatch({type: 'addSearchItem', payload: {...selectedItem, id: genId, group:'must'}})
-                            setGenId(prevState => (prevState + 1))
-                        } }
-                    />
-                </div>
-            </div>
-            <DndProvider backend={Backend}>
-                <div className="row mt-1">
-                    <div className="col-sm-6">
-                        <Group
-                            name="must"
-                            header="Must"
-                            hoverHelp="All elements in here must be present, so if you have Delay and Dispel it's only gonna show characters who have both"
-                            items={mainState.filter(item => item.group === 'must')}
-                            moveFromGroupToGroup = {moveFromGroupToGroup}
-                            changeItem = {changeItem}
-                        />
+        <section className="section">
+            <div className="container is-fluid">
+                <div className="columns">
+                    <div className="column has-text-centered">
+                        <h2 className="title">GranblueFantasy ability search</h2>
                     </div>
-                    <div className="col-sm-6">
-                        <Group
-                            name="may"
-                            header="May" 
-                            hoverHelp="Only one element must be true, so if you have Delay and Dispel here, it's gonna show character who have just Delay, just Dispel or both"
-                            items={mainState.filter(item => item.group === 'may')}
-                            moveFromGroupToGroup = {moveFromGroupToGroup}
-                            changeItem = {changeItem}
+                </div>
+                <div className="columns">
+                    <div className="column">
+                        <AbilitySearch
+                            onChange = { (selectedItem) => { 
+                                mainStateDispatch({type: 'addSearchItem', payload: {...selectedItem, id: genId, group:'must'}})
+                                setGenId(prevState => (prevState + 1))
+                                dispatch(addSearchTerm({name: selectedItem.value}))
+                            } }
                         />
                     </div>
                 </div>
-            </DndProvider>
-            <div className="row" style={{'marginTop': '5px'}}>
-                <div className="col">
-                    <Results count={ count } elements={result}/>
+                <DndProvider backend={Backend}>
+                    <div className="columns">
+                        <div className="column">
+                            <Group
+                                name="must"
+                                header="Must"
+                                hoverHelp="All elements in here must be present, so if you have Delay and Dispel it's only gonna show characters who have both"
+                                items={mainState.filter(item => item.group === 'must')}
+                                moveFromGroupToGroup = {moveFromGroupToGroup}
+                                changeItem = {changeItem}
+                            />
+                        </div>
+                        <div className="column">
+                            <Group
+                                name="may"
+                                header="May" 
+                                hoverHelp="Only one element must be true, so if you have Delay and Dispel here, it's gonna show character who have just Delay, just Dispel or both"
+                                items={mainState.filter(item => item.group === 'may')}
+                                moveFromGroupToGroup = {moveFromGroupToGroup}
+                                changeItem = {changeItem}
+                            />
+                        </div>
+                    </div>
+                </DndProvider>
+                <div className="columns" style={{'marginTop': '5px'}}>
+                    <div className="column">
+                        <Results count={ count } elements={result}/>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
     )
 }
 

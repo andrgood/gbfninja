@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { groupBy, chain, filter} from 'lodash'
-import db from '../db'
+import db from '../db/db'
 
 interface ResultsI {
     count: number;

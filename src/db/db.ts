@@ -1,7 +1,4 @@
-export enum Elements {
-    Fire = 1,
-    Wind,
-}
+import { Elements, Tags } from './types'
 
 export default {
     abilitySearchList: [
@@ -17,13 +14,15 @@ export default {
           id:1,
           element: Elements.Fire,
           name:'Anila',
-          maxHp:2015
+          maxHp:2015,
+          tags: [Tags.Element, Tags.MaxHp]
         },
         {
           id:2,
           element: Elements.Wind,
           name:'Andira',
-          maxHp:1660
+          maxHp:1660,
+          tags: [Tags.Element, Tags.MaxHp]
         }
       ]
 }

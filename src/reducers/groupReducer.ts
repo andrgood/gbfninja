@@ -1,5 +1,5 @@
 import { reject, cloneDeep } from 'lodash'
-import { AbilitySearchItem } from '../components/AbilitySearch'
+import { AbilitySearchItem } from '../features/abilitySearch/AbilitySearch'
 
 type groupState = AbilitySearchItem[]
 

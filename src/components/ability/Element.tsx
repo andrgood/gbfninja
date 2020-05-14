@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDrag } from 'react-dnd'
 import { useSelect } from 'downshift'
 import _ from 'lodash'
-import db from '../../db'
+import db from '../../db/db'
 
 const elementSearchList  = _.chain(db).get('elementSearchList').value()
 
