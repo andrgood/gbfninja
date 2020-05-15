@@ -1,5 +1,5 @@
 import React, {useState, useReducer, useEffect} from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import _ from 'lodash'
 
 import mainReducer, { initialState } from '../reducers/searchItems'
@@ -17,6 +17,8 @@ import Backend from 'react-dnd-html5-backend'
 import { DndProvider } from 'react-dnd'
 
 import { addSearchTerm } from '../features/searchTerms/searchTermsSlice'
+import NewGroup from '../features/group/Group'
+import { RootState } from '../store/store'
 
 function Search(): React.ReactElement {
 
@@ -54,6 +56,7 @@ function Search(): React.ReactElement {
         }
     }, [mainState])
 
+    const mustGroupTerms = useSelector((state: RootState) => state.searchTerms.filter(term => term.group === 'must'))
 
     return (
         <section className="section">
@@ -77,13 +80,10 @@ function Search(): React.ReactElement {
                 <DndProvider backend={Backend}>
                     <div className="columns">
                         <div className="column">
-                            <Group
-                                name="must"
+                            <NewGroup 
                                 header="Must"
                                 hoverHelp="All elements in here must be present, so if you have Delay and Dispel it's only gonna show characters who have both"
-                                items={mainState.filter(item => item.group === 'must')}
-                                moveFromGroupToGroup = {moveFromGroupToGroup}
-                                changeItem = {changeItem}
+                                items={mustGroupTerms}
                             />
                         </div>
                         <div className="column">

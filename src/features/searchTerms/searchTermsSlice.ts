@@ -38,6 +38,8 @@ const searchTermsSlice = createSlice({
     }
 })
 
+export { SearchTerm }
+
 export const { addSearchTerm } = searchTermsSlice.actions
 
 export default searchTermsSlice.reducer
