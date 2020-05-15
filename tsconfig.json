@@ -7,10 +7,12 @@
       "outDir": "./dist/",
       "sourceMap": true,
       "noImplicitAny": true,
+      "lib": ["dom", "esnext"],
       "module": "commonjs",
-      "target": "es6",
+      "target": "ESNext",
       "jsx": "react",
-      "allowSyntheticDefaultImports": true
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true
     },
     "include": ["./src/**/*"]
   }

@@ -49,7 +49,7 @@ function AbilitySearch({ abilityList = abilitySearchList, onChange }: AbilitySea
                         <input className="input is-medium" type="text" placeholder="Type in characteristic (Element, Race) or ability (Delay, Dispel)" {...getInputProps()} />
                     </div>
                     <div className="control">
-                        <button type="button" className="button is-primary is-medium" {...getToggleButtonProps()} aria-label={'toggle menu'} >&#129047;</button>
+                        <button type="button" className="button is-primary is-medium" {...getToggleButtonProps()} aria-label={'toggle menu'} >🠗</button>
                     </div>
                 </div>
             </form>
