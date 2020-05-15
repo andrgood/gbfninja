@@ -23,7 +23,7 @@ function Group( { header, hoverHelp, items }: GroupProps): React.ReactElement {
             {
                 items.map((item, index) => {
                     return (
-                        <p>{index} - {item.name} - {item.value}</p>
+                        <p key={`${item.name}-${index}`}>{index} - {item.name} - {item.value}</p>
                     )
                 })
             }
