@@ -10,14 +10,13 @@ const count  = _.chain(db).get('characters').value().length
 const characters  = _.chain(db).get('characters').value()
 
 import AbilitySearch from '../features/abilitySearch/AbilitySearch'
-import Group from '../components/Group'
 import Results from '../components/Results'
 
 import Backend from 'react-dnd-html5-backend'
 import { DndProvider } from 'react-dnd'
 
 import { addSearchTerm } from '../features/searchTerms/searchTermsSlice'
-import NewGroup from '../features/group/Group'
+import Group from '../features/group/Group'
 import { RootState } from '../store/store'
 
 function Search(): React.ReactElement {
@@ -57,6 +56,7 @@ function Search(): React.ReactElement {
     }, [mainState])
 
     const mustGroupTerms = useSelector((state: RootState) => state.searchTerms.filter(term => term.group === 'must'))
+    const mayGroupTerms = useSelector((state: RootState) => state.searchTerms.filter(term => term.group === 'may'))
 
     return (
         <section className="section">
@@ -80,7 +80,8 @@ function Search(): React.ReactElement {
                 <DndProvider backend={Backend}>
                     <div className="columns">
                         <div className="column">
-                            <NewGroup 
+                            <Group
+                                name="must"
                                 header="Must"
                                 hoverHelp="All elements in here must be present, so if you have Delay and Dispel it's only gonna show characters who have both"
                                 items={mustGroupTerms}
@@ -89,18 +90,16 @@ function Search(): React.ReactElement {
                         <div className="column">
                             <Group
                                 name="may"
-                                header="May" 
+                                header="May"
                                 hoverHelp="Only one element must be true, so if you have Delay and Dispel here, it's gonna show character who have just Delay, just Dispel or both"
-                                items={mainState.filter(item => item.group === 'may')}
-                                moveFromGroupToGroup = {moveFromGroupToGroup}
-                                changeItem = {changeItem}
+                                items={mayGroupTerms}
                             />
                         </div>
                     </div>
                 </DndProvider>
-                <div className="columns" style={{'marginTop': '5px'}}>
+                <div className="columns">
                     <div className="column">
-                        <Results count={ count } elements={result}/>
+                        <Results count={ 5 } elements={result}/>
                     </div>
                 </div>
             </div>

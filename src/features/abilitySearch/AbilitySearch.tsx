@@ -27,7 +27,7 @@ function AbilitySearch({ abilityList = abilitySearchList, onChange }: AbilitySea
         },
         onInputValueChange: ({inputValue}) => {
             setInputItems(
-                abilitySearchList.filter(item => {
+                abilityList.filter(item => {
                     return item.label.toLocaleLowerCase().startsWith(inputValue.toLocaleLowerCase())
                 })
             )

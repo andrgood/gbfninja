@@ -1,11 +1,11 @@
 export enum Elements {
-    Fire = 'FIRE',
-    Wind = 'WIND',
-    Water = 'WATER',
-    Earth = 'EARTH',
-    Light = 'LIGHT',
-    Dark = 'DARK',
-    Rainbow = 'RAINBOW'
+    Fire = 'fire',
+    Wind = 'wind',
+    Water = 'water',
+    Earth = 'earth',
+    Light = 'light',
+    Dark = 'dark',
+    Rainbow = 'rainbow'
 }
 
 export enum Tags {

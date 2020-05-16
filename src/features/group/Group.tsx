@@ -3,13 +3,21 @@ import { SearchTerm } from '../searchTerms/searchTermsSlice'
 
 import QuestionMark from './QuestionMark'
 
+import { Tags } from '../../db/types'
+import abilityMap from '../ability/abilityMap'
+
 interface GroupProps {
+    name: 'must' | 'may';
     header: string;
     hoverHelp: string;
     items: SearchTerm[];
 }
 
-function Group( { header, hoverHelp, items }: GroupProps): React.ReactElement {
+function Group( { name, header, hoverHelp, items }: GroupProps): React.ReactElement {
+    
+    const left = name === 'must' ? false : true
+    const right = name === 'must' ? true : false
+
     return (
         <div className="card">
             <div className="card-header">
@@ -22,8 +30,16 @@ function Group( { header, hoverHelp, items }: GroupProps): React.ReactElement {
             <div className="card-content">
             {
                 items.map((item, index) => {
+                    const Ability = abilityMap.get(item.name)
                     return (
-                        <p key={`${item.name}-${index}`}>{index} - {item.name} - {item.value}</p>
+                        <Ability
+                            key={ item.id }
+                            id={ item.id }
+                            name={ item.name }
+                            value={ item.value }
+                            leftArrow = { left }
+                            rightArrow = { right }
+                        />
                     )
                 })
             }
