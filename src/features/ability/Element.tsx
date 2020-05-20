@@ -86,12 +86,12 @@ function Element({id, name, value, leftArrow, rightArrow}: ElementI): React.Reac
 
     return(
         <React.Fragment>
-            <div className="field has-addons" {...getComboboxProps()} style={{marginBottom: '0'}}>
+            <div className="field has-addons" {...getComboboxProps()} ref={ preview } style={{marginBottom: '0', opacity}}>
                 <label className="is-sr-only" {...getLabelProps()}>Choose an Element</label>
                 <div className="control">
                     {leftArrow ? <button type="button" className="button is-warning" style={{width: '60px'}} onClick={() => { dispath(toogleGroup({id})) }}>🡰</button> : null}
                 </div>
-                <div className="control" >
+                <div className="control" ref={drag} style={handleStyle} >
                     <span className="button is-static" ref={dropWidthRef}>Element</span>
                 </div>
                 <div className="control is-expanded">

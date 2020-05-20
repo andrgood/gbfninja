@@ -1,21 +1,14 @@
-import React, {useState, useReducer, useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import _ from 'lodash'
-
-import mainReducer, { initialState } from '../reducers/searchItems'
-import { search, mustSearch } from '../search'
-
-import db from '../db/db'
-const count  = _.chain(db).get('characters').value().length
-const characters  = _.chain(db).get('characters').value()
 
 import AbilitySearch from '../features/abilitySearch/AbilitySearch'
-import Results from '../components/Results'
+import Results from '../features/results/Results'
 
 import Backend from 'react-dnd-html5-backend'
 import { DndProvider } from 'react-dnd'
 
 import { addSearchTerm } from '../features/searchTerms/searchTermsSlice'
+import { getResults } from '../features/results/resultsSlice'
 import Group from '../features/group/Group'
 import { RootState } from '../store/store'
 
@@ -23,42 +16,17 @@ function Search(): React.ReactElement {
 
     const dispatch = useDispatch()
 
-    const [genId, setGenId] = useState(1)
-    const [mainState, mainStateDispatch] = useReducer(mainReducer, initialState)
-    const [result, setResult] = useState([])
-
-    function moveFromGroupToGroup(id: number): void {
-        mainStateDispatch({type: 'changeGroup', payload: {id: id}})
-    }
-
-    function changeItem(id: number, item: any): void {
-        mainStateDispatch({type:'changeItem', payload: {id: id, item: item}})
-    }
-
-    console.log(mainState)
-
-    useEffect(() => {
-        if(mainState.length > 0) {
-            const searchObj = mainState.map(element => {
-                return {
-                    group: element.group,
-                    name: element.item.name,
-                    value: element.item.value
-                }
-            })
-            const groupedObj = _.groupBy(searchObj, 'group')
-            console.log(search(groupedObj.must[0], characters))
-            if(groupedObj.must[0].name) {
-                setResult(search(groupedObj.must[0], characters))
-            }
-            
-        }
-    }, [mainState])
-
+    const searchTerms = useSelector((state: RootState) => state.searchTerms)
     const mustGroupTerms = useSelector((state: RootState) => state.searchTerms.filter(term => term.group === 'must'))
     const mayGroupTerms = useSelector((state: RootState) => state.searchTerms.filter(term => term.group === 'may'))
+    const searchResults = useSelector((state: RootState) => state.results.resultItems)
+
+    useEffect(() => {
+        dispatch(getResults({terms: searchTerms}))
+    }, [dispatch, searchTerms])
 
     return (
+        <React.Fragment>
         <section className="section">
             <div className="container is-fluid">
                 <div className="columns">
@@ -70,8 +38,6 @@ function Search(): React.ReactElement {
                     <div className="column">
                         <AbilitySearch
                             onChange = { (selectedItem) => { 
-                                mainStateDispatch({type: 'addSearchItem', payload: {...selectedItem, id: genId, group:'must'}})
-                                setGenId(prevState => (prevState + 1))
                                 dispatch(addSearchTerm({name: selectedItem.value}))
                             } }
                         />
@@ -99,11 +65,17 @@ function Search(): React.ReactElement {
                 </DndProvider>
                 <div className="columns">
                     <div className="column">
-                        <Results count={ 5 } elements={result}/>
+                        <Results results={ searchResults }/>
                     </div>
                 </div>
             </div>
         </section>
+        <footer className="footer">
+        <div className="content has-text-centered">
+          <p>Granblue Fantasy content and materials are trademarks and copyrights of Cygames, Inc. or its licensors. All rights reserved.</p>
+        </div>
+      </footer>
+      </React.Fragment>
     )
 }
 

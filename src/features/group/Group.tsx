@@ -1,9 +1,11 @@
 import React from 'react'
-import { SearchTerm } from '../searchTerms/searchTermsSlice'
+import { useDrop } from 'react-dnd'
+import { useDispatch } from 'react-redux'
+
+import { SearchTerm, toogleGroup } from '../searchTerms/searchTermsSlice'
 
 import QuestionMark from './QuestionMark'
 
-import { Tags } from '../../db/types'
 import abilityMap from '../ability/abilityMap'
 
 interface GroupProps {
@@ -14,12 +16,21 @@ interface GroupProps {
 }
 
 function Group( { name, header, hoverHelp, items }: GroupProps): React.ReactElement {
-    
+
+    const dispath = useDispatch()
+
+    const [{}, drop] = useDrop({
+        accept: 'ability',
+        drop(item: { id: string, type: string}) {
+            dispath(toogleGroup({id: item.id}))
+        }
+    })
+
     const left = name === 'must' ? false : true
     const right = name === 'must' ? true : false
 
     return (
-        <div className="card">
+        <div ref={drop} className="card">
             <div className="card-header">
                 <div className="card-header-title">
                     { header }

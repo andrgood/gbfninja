@@ -1,4 +1,4 @@
-export enum Elements {
+enum Elements {
     Fire = 'fire',
     Wind = 'wind',
     Water = 'water',
@@ -8,7 +8,19 @@ export enum Elements {
     Rainbow = 'rainbow'
 }
 
-export enum Tags {
+enum Tags {
     Element = 'element',
     MaxHp = 'maxHp'
 }
+
+type Character = {
+    id: number;
+    element: Elements;
+    name: string;
+    maxHp: number;
+    tags: Tags[];
+}
+
+type CharacterKeys = keyof Character
+
+export { Elements, Tags, Character, CharacterKeys}
